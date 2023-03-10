@@ -1,6 +1,36 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
+$script = <<-SCRIPT
+#!/usr/bin/env bash
+
+set -eu 
+
+echo "[INFO] Updating os"
+sudo apt update -y
+sudo apt install jq git -y
+
+
+echo "[INFO] Installing go"
+curl -LO https://go.dev/dl/go1.20.1.linux-amd64.tar.gz
+sudo rm -rf /usr/local/go && sudo tar -C /usr/local -xzf go1.20.1.linux-amd64.tar.gz
+export PATH=$PATH:/usr/local/go/bin
+export PATH=$PATH:$(go env GOPATH)/bin
+echo "export PATH=$PATH:/usr/local/go/bin:$(/usr/local/go/bin/go env GOPATH)" >> $HOME/.bashrc 
+
+echo "[INFO] Installing foundry"
+curl -L https://foundry.paradigm.xyz | bash
+
+echo "[INFO] Getting polaris and setting up build"
+git clone https://github.com/berachain/polaris
+pushd polaris
+git checkout main
+go run build/setup.go
+
+echo "[INFO] Building polard"
+mage install
+SCRIPT
+
 Vagrant.configure("2") do |config|
   config.vm.box = "ubuntu/jammy64"
   config.vm.hostname = "polar"
@@ -23,5 +53,5 @@ Vagrant.configure("2") do |config|
     vb.memory = "32000"
   end
 
-  config.vm.provision "shell", path: "./provision.sh", privileged: false
+  config.vm.provision "shell", inline: $script, privileged: false
 end
