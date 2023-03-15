@@ -16,7 +16,7 @@ curl -LO https://go.dev/dl/go1.20.1.linux-amd64.tar.gz
 sudo rm -rf /usr/local/go && sudo tar -C /usr/local -xzf go1.20.1.linux-amd64.tar.gz
 export PATH=$PATH:/usr/local/go/bin
 export PATH=$PATH:$(go env GOPATH)/bin
-echo "export PATH=$PATH:/usr/local/go/bin:$(/usr/local/go/bin/go env GOPATH)" >> $HOME/.bashrc 
+echo "export PATH=$PATH:/usr/local/go/bin:$(/usr/local/go/bin/go env GOPATH)/bin" >> $HOME/.bashrc 
 
 echo "[INFO] Installing foundry"
 curl -L https://foundry.paradigm.xyz | bash
@@ -25,10 +25,11 @@ echo "[INFO] Getting polaris and setting up build"
 git clone https://github.com/berachain/polaris
 pushd polaris
 git checkout main
-go run build/setup.go
+go run magefiles/setup/setup.go
 
 echo "[INFO] Building polard"
-mage install
+mage test
+popd
 SCRIPT
 
 Vagrant.configure("2") do |config|
