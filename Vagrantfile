@@ -60,7 +60,7 @@ git checkout main
 go run magefiles/setup/setup.go
 
 echo "[INFO] Building polard"
-mage cosmos:build
+mage build
 popd
 SCRIPT
 
