@@ -37,7 +37,20 @@ sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin
 sudo usermod -aG docker vagrant
 
 echo "[INFO] Installing foundry"
-curl -L https://foundry.paradigm.xyz | bash
+FOUNDRY_DIR=${FOUNDRY_DIR-"$HOME/.foundry"}
+FOUNDRY_BIN_DIR="$FOUNDRY_DIR/bin"
+FOUNDRY_MAN_DIR="$FOUNDRY_DIR/share/man/man1"
+BIN_URL="https://raw.githubusercontent.com/foundry-rs/foundry/master/foundryup/foundryup"
+BIN_PATH="$FOUNDRY_BIN_DIR/foundryup"
+mkdir -p $FOUNDRY_BIN_DIR
+mkdir -p $FOUNDRY_MAN_DIR
+curl -# -L $BIN_URL -o $BIN_PATH
+chmod +x $BIN_PATH
+PROFILE=$HOME/.bashrc
+PREF_SHELL=bash
+if [[ ":$PATH:" != *":${FOUNDRY_BIN_DIR}:"* ]]; then
+  echo >> $PROFILE && echo "export PATH=\"\$PATH:$FOUNDRY_BIN_DIR\"" >> $PROFILE
+fi
 ./.foundry/bin/foundryup
 
 echo "[INFO] Getting polaris and setting up build"
@@ -47,7 +60,7 @@ git checkout main
 go run magefiles/setup/setup.go
 
 echo "[INFO] Building polard"
-mage cosmos:test
+mage cosmos:build
 popd
 SCRIPT
 
