@@ -52,6 +52,7 @@ if [[ ":$PATH:" != *":${FOUNDRY_BIN_DIR}:"* ]]; then
   echo >> $PROFILE && echo "export PATH=\"\$PATH:$FOUNDRY_BIN_DIR\"" >> $PROFILE
 fi
 ./.foundry/bin/foundryup
+export PATH=$PATH:$HOME/.foundry/bin
 
 echo "[INFO] Getting polaris and setting up build"
 git clone https://github.com/berachain/polaris
