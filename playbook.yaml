@@ -1,0 +1,5 @@
+---
+- name: Deploy berachain
+  hosts: bera
+  roles:
+  - RnodeC.berachain

@@ -1,6 +1,6 @@
-# polaris-local-machine
+# berachain-local-machine
 
-This just creates a local vm and installs polaris following [official doc](https://polaris.berachain.dev/docs)
+This just creates a local vm and installs berachain.  The use case is for local testing of [RnodeC.berachain ansible role](https://github.com/RnodeC/RnodeC.berachain).
 
 ```
 vagrant up
