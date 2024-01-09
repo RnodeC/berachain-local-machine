@@ -1,5 +1,14 @@
 ---
-- name: Deploy berachain
+- name: Deploy berachain node
   hosts: bera
+  vars:
+    dev_mode: true
+    berachain_moniker: bera
+    berachain_role: full
+    berachain_chain_id: artio-80085
+    berachain_genesis_url:  'https://raw.githubusercontent.com/berachain/networks/main/testnets/artio-80085/config/genesis.json?token=GHSAT0AAAAAACMOEPVFHPUP25XNCRAL533SZM42RFA'
+    berachain_bin_url: 'https://berad-private.s3.us-east-2.amazonaws.com/berad-linux-amd64-v0.1.0-alpha?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAXIHH4ECZJT5YBQR6%2F20240105%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20240105T053635Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=c546e68c39f75cc44db1fc84ce5b4f03e1e600ffdc294ae0ce81955f1d90a3f8'
+    berachain_polaris_chain_id: '80085'
+    berachain_seeds: '6f64d0497d3b8f3e3a22cc2e55f0b91978f5d12c@seed.bera.bh.rocks:46656,ade4d8bc8cbe014af6ebdf3cb7b1e9ad36f412c0@testnet-seeds.polkachu.com:25456'
   roles:
   - RnodeC.berachain
