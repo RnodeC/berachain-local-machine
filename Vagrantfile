@@ -11,7 +11,7 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.provision "ansible" do |ansible|
-    ansible.playbook = "playbook.yaml"
+    ansible.playbook = "myplaybook.yaml"
     ansible.groups = {
       "rpc" => ["bera"],
       "rpc:vars" => {"berachain_role" => "rpc"}
