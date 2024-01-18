@@ -1,3 +1,8 @@
 .vagrant
 .vscode
 myplaybook.yaml
+.berad/data
+.berad/config/node_key.json
+.berad/config/priv_validator_key.json
+.berad/keystore
+.berad/polaris-geth/nodekey
